@@ -198,6 +198,13 @@ function fitComicFrames(){
  });
 }
 addEventListener('resize',fitComicFrames);
+// Main artwork may finish loading after its evidence photos.
+document.querySelectorAll('.comic-cell img').forEach(img=>img.addEventListener('load',fitComicFrames));
+requestAnimationFrame(fitComicFrames);
+if('ResizeObserver' in window){
+ const frameObserver=new ResizeObserver(fitComicFrames);
+ document.querySelectorAll('.comic-grid-board').forEach(board=>frameObserver.observe(board));
+}
 function fitReferences(){
   fitComicFrames();
   document.querySelectorAll('.references').forEach(group=>{
